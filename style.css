@@ -1,0 +1,955 @@
+
+/* =========================================
+   1. ESTILOS GLOBALES
+   ========================================= */
+
+:root {
+    --cream: #fff9f2;
+    --wine: #830c0e;
+    --pink: #fd84d1;
+    --white: #ffffff;
+    --pink-light: #ffe2f3;
+    --wine-light: #a53a3d;
+
+    --font-normal: "Open Sauce", "Arial", sans-serif;
+    --font-bold: "Open Sauce", "Arial", sans-serif;
+
+    --page-padding: 24px;
+    --content-width: 1200px;
+}
+
+@font-face {
+    font-family: "Open Sauce";
+    src: url("fonts/OpenSauceOne-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Open Sauce";
+    src: url("fonts/OpenSauceOne-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--wine);
+    font-family: var(--font-normal);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+    font-family: var(--font-normal);
+}
+
+button,
+input,
+select,
+textarea {
+    font-size: inherit;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    color: inherit;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+    margin-top: 0;
+}
+
+h1,
+h2,
+h3,
+strong {
+    font-weight: 700;
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.05;
+    letter-spacing: -0.055em;
+}
+
+::selection {
+    background: var(--pink);
+    color: var(--wine);
+}
+
+.section-container {
+    width: min(100% - 2 * var(--page-padding), var(--content-width));
+    margin-inline: auto;
+}
+
+.eyebrow {
+    margin-bottom: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    line-height: 1.5;
+}
+
+.section-description {
+    max-width: 540px;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+.button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 42px;
+    padding: 12px 24px;
+    border: 0;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-align: center;
+    cursor: pointer;
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.button-pink {
+    background: var(--pink);
+    color: var(--white);
+}
+
+.button-pink:hover {
+    background: var(--wine);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+.button:focus-visible,
+a:focus-visible,
+.menu-toggle:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--wine);
+    outline-offset: 4px;
+}
+
+.text-link {
+    display: inline-block;
+    margin-top: 16px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--wine);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.text-link:hover {
+    color: var(--wine-light);
+}
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* =========================================
+   2. NAVEGACIÓN Y PIE DE PÁGINA
+   ========================================= */
+
+.site-header {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 76px;
+    padding: 16px var(--page-padding);
+}
+
+.brand {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.08em;
+}
+
+.main-navigation {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    padding: 12px var(--page-padding) 22px;
+    background: var(--cream);
+    border-bottom: 1px solid rgb(131 12 14 / 12%);
+}
+
+.main-navigation.is-open {
+    display: flex;
+}
+
+.main-navigation a {
+    padding: 12px 0;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.main-navigation a:hover,
+.main-navigation a[aria-current="page"] {
+    color: var(--wine-light);
+}
+
+.menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 42px;
+    height: 42px;
+    padding: 10px;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--wine);
+    transition: transform 0.2s ease;
+}
+
+.menu-toggle[aria-expanded="true"] span:first-child {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle[aria-expanded="true"] span:last-child {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+.site-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 28px var(--page-padding);
+    border-top: 1px solid rgb(131 12 14 / 15%);
+    font-size: 10px;
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+.site-footer a {
+    font-weight: 700;
+}
+
+
+/* =========================================
+   3. PÁGINA DE INICIO
+   ========================================= */
+
+.hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: min(78svh, 760px);
+    min-height: min(78vh, 760px);
+    padding: 32px var(--page-padding) 64px;
+    overflow: hidden;
+}
+
+.hero-name {
+    align-self: flex-end;
+    max-width: 240px;
+    margin-bottom: auto;
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: right;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    margin-top: 90px;
+}
+
+.hero-intro {
+    max-width: 300px;
+    margin-bottom: 16px;
+    font-size: 11px;
+}
+
+.hero h1 {
+    margin-bottom: 22px;
+    font-size: clamp(54px, 12.5vw, 100px);
+    font-weight: 700;
+    line-height: 0.88;
+    letter-spacing: -0.075em;
+}
+
+.hero-decoration {
+    position: absolute;
+    right: -20px;
+    bottom: 20px;
+    color: rgb(131 12 14 / 8%);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    writing-mode: vertical-rl;
+}
+
+.home-about {
+    padding-top: 90px;
+    padding-bottom: 100px;
+    border-top: 1px solid rgb(131 12 14 / 12%);
+}
+
+.home-about h2 {
+    margin-bottom: 22px;
+    font-size: clamp(34px, 7vw, 60px);
+}
+
+.home-about .section-description {
+    margin-bottom: 24px;
+}
+
+
+/* =========================================
+   4. PÁGINA DE PORTAFOLIO
+   ========================================= */
+
+.page-heading {
+    padding-top: 64px;
+    padding-bottom: 44px;
+}
+
+.page-heading h1 {
+    margin-bottom: 20px;
+    font-size: clamp(56px, 12vw, 100px);
+}
+
+.page-heading h1 span,
+.contact-copy h1 span {
+    color: var(--pink);
+}
+
+.projects {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px 20px;
+    padding-bottom: 90px;
+}
+
+.project-card {
+    min-width: 0;
+}
+
+.project-art {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 310px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.art-label {
+    position: relative;
+    z-index: 1;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+.art-branding {
+    background: var(--pink-light);
+    color: var(--wine);
+}
+
+.art-title {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(48px, 12vw, 78px);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.08em;
+}
+
+.art-symbol {
+    position: absolute;
+    right: 12px;
+    top: 28%;
+    color: var(--pink);
+    font-size: 130px;
+    line-height: 1;
+}
+
+.art-editorial {
+    background: var(--wine);
+    color: var(--white);
+}
+
+.editorial-word {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(44px, 11vw, 70px);
+    font-weight: 700;
+    line-height: 0.88;
+    letter-spacing: -0.07em;
+}
+
+.editorial-circle {
+    position: absolute;
+    right: 20px;
+    top: 24%;
+    display: grid;
+    place-content: center;
+    width: 82px;
+    height: 82px;
+    border: 1px solid var(--pink);
+    border-radius: 50%;
+    color: var(--pink);
+    font-size: 11px;
+    text-align: center;
+    transform: rotate(12deg);
+}
+
+.art-poster {
+    background: var(--pink);
+    color: var(--wine);
+}
+
+.poster-star {
+    position: absolute;
+    right: 18px;
+    top: 13%;
+    font-size: 94px;
+}
+
+.poster-title {
+    position: relative;
+    z-index: 1;
+    font-size: clamp(46px, 11vw, 74px);
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.08em;
+}
+
+.poster-caption {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.art-packaging {
+    align-items: center;
+    background: #f1d7b9;
+    color: var(--wine);
+}
+
+.art-packaging .art-label {
+    align-self: flex-start;
+    width: 100%;
+}
+
+.package-shape {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: min(72%, 220px);
+    min-height: 225px;
+    padding: 20px;
+    background: var(--cream);
+    box-shadow: 10px 12px 0 rgb(131 12 14 / 10%);
+    transform: rotate(-4deg);
+}
+
+.package-shape > span:first-child {
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+}
+
+.package-flower {
+    align-self: center;
+    color: var(--pink);
+    font-size: 65px;
+}
+
+.package-shape small {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.project-info {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 16px;
+}
+
+.project-info h2 {
+    margin-bottom: 6px;
+    font-size: 17px;
+    letter-spacing: -0.04em;
+}
+
+.project-info p {
+    margin: 0;
+    font-size: 11px;
+}
+
+.project-number {
+    font-size: 11px;
+}
+
+.portfolio-cta {
+    padding: 72px var(--page-padding);
+    background: var(--wine);
+    color: var(--white);
+    text-align: center;
+}
+
+.portfolio-cta .eyebrow {
+    color: var(--pink);
+}
+
+.portfolio-cta h2 {
+    margin-bottom: 28px;
+    font-size: clamp(35px, 8vw, 64px);
+}
+
+
+/* =========================================
+   5. PÁGINA DE CONTACTO
+   ========================================= */
+
+.contact-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 44px;
+    padding-top: 56px;
+    padding-bottom: 84px;
+}
+
+.contact-copy h1 {
+    margin-bottom: 24px;
+    font-size: clamp(58px, 12vw, 92px);
+}
+
+.contact-copy .section-description {
+    max-width: 440px;
+}
+
+.contact-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-top: 36px;
+    padding-top: 22px;
+    border-top: 1px solid rgb(131 12 14 / 15%);
+}
+
+.detail-symbol {
+    color: var(--pink);
+    font-size: 32px;
+    line-height: 1;
+}
+
+.contact-detail h2 {
+    margin-bottom: 8px;
+    font-size: 15px;
+    letter-spacing: -0.03em;
+}
+
+.contact-detail p {
+    margin-bottom: 0;
+    font-size: 11px;
+}
+
+.contact-form-wrapper {
+    padding: 28px 20px;
+    background: var(--white);
+}
+
+.form-heading {
+    margin-bottom: 28px;
+}
+
+.form-heading .eyebrow {
+    font-size: 9px;
+}
+
+.form-heading h2 {
+    margin-bottom: 0;
+    font-size: 34px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 13px 14px;
+    border: 1px solid rgb(131 12 14 / 22%);
+    border-radius: 0;
+    background: var(--cream);
+    color: var(--wine);
+    font-size: 12px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #916d6d;
+    opacity: 1;
+}
+
+.form-group textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.form-group select {
+    cursor: pointer;
+}
+
+.form-submit {
+    width: 100%;
+    min-height: 48px;
+}
+
+.form-feedback {
+    margin: 16px 0 0;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.form-feedback:empty {
+    display: none;
+}
+
+.form-feedback.success {
+    color: var(--wine);
+}
+
+.form-feedback.error {
+    color: var(--wine);
+    font-weight: 700;
+}
+
+
+/* =========================================
+   6. TABLET: DESDE 600 PX
+   ========================================= */
+
+@media (min-width: 600px) {
+    :root {
+        --page-padding: 40px;
+    }
+
+    .site-header {
+        min-height: 90px;
+    }
+
+    .hero {
+        min-height: 75vh;
+        padding-top: 35px;
+        padding-bottom: 70px;
+    }
+
+    .hero-name {
+        max-width: none;
+        font-size: 14px;
+    }
+
+    .hero-content {
+        margin-top: 100px;
+    }
+
+    .hero h1 {
+        font-size: clamp(76px, 10vw, 110px);
+    }
+
+    .home-about {
+        padding-top: 110px;
+        padding-bottom: 120px;
+    }
+
+    .projects {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 40px 24px;
+    }
+
+    .project-art {
+        min-height: 300px;
+    }
+
+    .project-large {
+        grid-column: span 2;
+    }
+
+    .project-large .project-art {
+        min-height: 390px;
+    }
+
+    .contact-form-wrapper {
+        padding: 36px;
+    }
+
+    .site-footer {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
+}
+
+
+/* =========================================
+   7. ESCRITORIO: DESDE 900 PX
+   ========================================= */
+
+@media (min-width: 900px) {
+    :root {
+        --page-padding: 60px;
+    }
+
+    .site-header {
+        min-height: 96px;
+        padding-inline: var(--page-padding);
+    }
+
+    .brand {
+        font-size: 32px;
+    }
+
+    .menu-toggle {
+        display: none;
+    }
+
+    .main-navigation {
+        position: static;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 36px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+    }
+
+    .main-navigation a {
+        padding: 8px 0;
+        font-size: 12px;
+    }
+
+    .hero {
+        min-height: 76vh;
+        min-height: 76svh;
+        padding: 28px var(--page-padding) 80px;
+    }
+
+    .hero-name {
+        font-size: 19px;
+    }
+
+    .hero-content {
+        margin-top: 120px;
+    }
+
+    .hero-intro {
+        font-size: 13px;
+    }
+
+    .hero h1 {
+        font-size: clamp(100px, 11vw, 145px);
+        line-height: 0.82;
+    }
+
+    .hero .button {
+        min-height: 46px;
+        padding-inline: 28px;
+    }
+
+    .hero-decoration {
+        right: 36px;
+        bottom: 40px;
+    }
+
+    .home-about {
+        padding-top: 140px;
+        padding-bottom: 150px;
+    }
+
+    .home-about h2 {
+        font-size: 68px;
+    }
+
+    .section-description {
+        font-size: 15px;
+    }
+
+    .page-heading {
+        padding-top: 90px;
+        padding-bottom: 60px;
+    }
+
+    .page-heading h1 {
+        font-size: 116px;
+    }
+
+    .projects {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 60px 32px;
+        padding-bottom: 120px;
+    }
+
+    .project-art {
+        min-height: 400px;
+        padding: 28px;
+    }
+
+    .project-large .project-art {
+        min-height: 520px;
+    }
+
+    .art-title {
+        font-size: 100px;
+    }
+
+    .editorial-word {
+        font-size: 84px;
+    }
+
+    .poster-title {
+        font-size: 86px;
+    }
+
+    .portfolio-cta {
+        padding: 110px 30px;
+    }
+
+    .contact-layout {
+        grid-template-columns: 1fr 0.9fr;
+        align-items: start;
+        gap: 80px;
+        padding-top: 90px;
+        padding-bottom: 120px;
+    }
+
+    .contact-copy {
+        padding-top: 25px;
+    }
+
+    .contact-copy h1 {
+        font-size: clamp(76px, 8vw, 108px);
+    }
+
+    .contact-form-wrapper {
+        padding: 42px;
+    }
+}
+
+
+/* =========================================
+   8. ESCRITORIO AMPLIO: DESDE 1200 PX
+   ========================================= */
+
+@media (min-width: 1200px) {
+    .hero h1 {
+        font-size: 130px;
+    }
+
+    .hero-content {
+        margin-top: 150px;
+    }
+
+    .projects {
+        column-gap: 40px;
+        row-gap: 70px;
+    }
+
+    .project-large .project-art {
+        min-height: 580px;
+    }
+}
+
+
+/* =========================================
+   9. ACCESIBILIDAD Y MOVIMIENTO
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
